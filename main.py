@@ -66,9 +66,10 @@ def agent_loop(history: list):
         for block in response.content:
             if block.type == "tool_use":
                 cmd = block.input["command"]
-                out = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=300, cwd=os.getcwd())
+                # out = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=300, cwd=os.getcwd())
                 print(f"\033[33m$ {cmd}\033[0m")
-                output = out.stdout + out.stderr
+                # output = out.stdout + out.stderr
+                output = run_bash(cmd)
                 results.append({"type": "tool_result", "tool_use_id": block.id, "content": output})
 
         # 5.将工具结果加入对话历史，继续下一轮对话
